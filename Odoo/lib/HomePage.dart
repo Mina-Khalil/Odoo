@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:odoo/CreateTable.dart';
 import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
+import 'package:odoo/TablesDatabase.dart';
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   State<HomePage> createState() => _HomePage();
 }
@@ -18,16 +22,33 @@ class _HomePage extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: ElevatedButton(
+      body: Column(
+        children: [
+          ElevatedButton(
           child: const Text('Back',style: TextStyle(fontSize: 25),),
           onPressed: () {
             setState(() {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const LogIn()));
             });
           },
         ),
+          ElevatedButton(
+            child: const Text('TablesBataBase',style: TextStyle(fontSize: 25),),
+            onPressed: () {
+              setState(() {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const Tables()));
+              });
+            },
+          ),
+          ElevatedButton(
+            child: const Text('CreateTable',style: TextStyle(fontSize: 25),),
+            onPressed: () {
+              setState(() {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateTable()));
+              });
+            },
+          ),
+    ]
       ),
       drawer: Drawer(
         child: ListView(
@@ -63,7 +84,7 @@ class _HomePage extends State<HomePage> {
                   : null, ),
             ///////////// Second Choose
             ListTile(
-              title: const Text('The Secound'),
+              title: const Text('The Second'),
               trailing: IconButton(
                 icon: const Icon(Icons.arrow_forward),
                 onPressed: () {
@@ -98,7 +119,7 @@ class _HomePage extends State<HomePage> {
                         setState(() {
                           Navigator.push(
                               context,
-                              MaterialPageRoute( builder: (context) => Registration())); });
+                              MaterialPageRoute( builder: (context) => const Registration())); });
                       }, child: const Text("3.1 ")),
                   TextButton(
                       onPressed: () {
@@ -106,7 +127,7 @@ class _HomePage extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Registration()));
+                                  builder: (context) => const Registration()));
                         });
                       },
                       child: const Text("3.2")),
@@ -115,7 +136,7 @@ class _HomePage extends State<HomePage> {
                         setState(() {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Registration()));
+                              MaterialPageRoute(builder: (context) => const Registration()));
                         });
                       },
                       child: const Text("3.3")),
@@ -159,7 +180,7 @@ class _HomePage extends State<HomePage> {
                 },
               ),
             ),
-            /////////// Seeting
+            /////////// Setting
             ListTile(
               title: const Text('Setting'),
               trailing: IconButton(

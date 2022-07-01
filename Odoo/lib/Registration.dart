@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:odoo/HomePage.dart';
 import 'package:odoo/LoginPage.dart';
 class Registration extends StatelessWidget {
   const Registration({Key? key}) : super(key: key);
@@ -8,7 +7,7 @@ class Registration extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: Text("Registration"),
+        appBar: AppBar(title: const Text("Registration"),
           leading: BackButton(
             color: Colors.black,
             onPressed: () {
@@ -34,7 +33,7 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   bool _passwordVisible = false;
-  bool _ConfirmaPaVisible = false;
+  var _confirmaPaVisible = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,14 +45,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               padding: const EdgeInsets.all(5),
               child: TextFormField(
                 keyboardType: TextInputType.name,
+                validator: (val) {
+                  return val!.isEmpty ? "No Data" : null;
+                },
                 decoration:  InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1,color: Colors.black87),
+                      borderSide: const BorderSide(width: 1,color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)
 
                   ),
-                  labelText: ' Firts Name',
-                  prefixIcon: Icon(Icons.person),
+                  labelText: 'First Name',
+                  prefixIcon: const Icon(Icons.person),
                 ),
               ),
             ),
@@ -62,14 +64,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               padding: const EdgeInsets.all(5),
               child: TextFormField(
                 keyboardType: TextInputType.name,
+                validator: (val) {
+                  return val!.isEmpty ? "No Data" : null;
+                },
                 decoration:  InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1,color: Colors.black87),
+                      borderSide: const BorderSide(width: 1,color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)
 
                   ),
                   labelText: ' Last Name',
-                  prefixIcon: Icon(Icons.person),
+                  prefixIcon: const Icon(Icons.person),
                 ),
               ),
             ),
@@ -78,13 +83,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               padding: const EdgeInsets.all(5),
               child: TextFormField(
                 keyboardType: TextInputType.phone,
+                validator: (val) {
+                  return val!.isEmpty ? "No Data" : null;
+                },
                 decoration:  InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1,color: Colors.black87),
+                      borderSide: const BorderSide(width: 1,color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)
                   ),
                   labelText: ' Number Phone',
-                  prefixIcon: Icon(Icons.phone_android),
+                  prefixIcon: const Icon(Icons.phone_android),
                 ),
               ),
             ),
@@ -93,14 +101,17 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               padding: const EdgeInsets.all(5),
               child: TextFormField(
                 keyboardType: TextInputType.emailAddress,
+                validator: (val) {
+                  return val!.isEmpty ? "No Data" : null;
+                },
                 decoration:  InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1,color: Colors.black87),
+                      borderSide: const BorderSide(width: 1,color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)
 
                   ),
                   labelText: 'E-mail',
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: const Icon(Icons.email),
                 ),
               ),
             ),
@@ -109,13 +120,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               padding: const EdgeInsets.all(10),
               child: TextFormField(
                 obscureText: !_passwordVisible,//This will obscure text dynamically
+                validator: (val) {
+                  return val!.isEmpty ? "No Data" : null;
+                },
                 decoration:  InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1,color: Colors.black87),
+                      borderSide: const BorderSide(width: 1,color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)
                   ),
                   labelText: ' Password ',
-                  prefixIcon:Icon(Icons.lock_outline,),
+                  prefixIcon:const Icon(Icons.lock_outline,),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -133,33 +147,36 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(5),
               child: TextFormField(
-                obscureText: !_ConfirmaPaVisible,//This will obscure text dynamically
+                obscureText: !_confirmaPaVisible,//This will obscure text dynamically
+                validator: (val) {
+                  return val!.isEmpty ? "No Data" : null;
+                },
                 decoration:  InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1,color: Colors.black87),
+                      borderSide: const BorderSide(width: 1,color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)
                   ),
                   labelText: ' Confirm Password ',
-                  prefixIcon: Icon(Icons.lock_outline),
+                  prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _ConfirmaPaVisible ? Icons.visibility : Icons.visibility_off,
+                      _confirmaPaVisible ? Icons.visibility : Icons.visibility_off,
                     ),
                     onPressed: () {
                       setState(() {
-                        _ConfirmaPaVisible = !_ConfirmaPaVisible;
+                        _confirmaPaVisible = !_confirmaPaVisible;
                     });
                     },
                   ),
                 ),
               ),
             ),
-            /// Add
+            /// Create Account button
             Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(120, 20, 120, 0),
+                height: 70,
+                padding: const EdgeInsets.fromLTRB(100, 20, 100, 0),
                 child: ElevatedButton(
-                  child: const Text('Add',style: TextStyle(fontSize: 25),),
+                  child: const Text('Create',style: TextStyle(fontSize: 35),),
                   onPressed: () => showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
