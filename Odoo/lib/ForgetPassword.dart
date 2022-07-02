@@ -1,9 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:odoo/LoginPage.dart';
+import 'package:odoo/provider/my_provider.dart';
+import 'package:provider/provider.dart';
 
-class ForgetPassword extends StatelessWidget {
+class ForgetPassword extends StatefulWidget {
   const ForgetPassword({Key? key}) : super(key: key);
 
+  @override
+  State<ForgetPassword> createState() => _ForgetPasswordState();
+}
+
+class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,7 +19,7 @@ class ForgetPassword extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           leading: BackButton(
-            color: Colors.white,
+            color: Colors.black,
             onPressed: () {
               Navigator.push(
                 context,
@@ -34,6 +42,36 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  String? pin;
+  TextEditingController EmailController = new TextEditingController();
+  Future<bool> GetPinFun() async {
+    try {
+      String url = "http://192.168.1.4:8080/api/sendpin/";
+      List<String>? data;
+      String? res;
+      url += EmailController.text;
+      final Dio dio = Dio();
+
+      print(url);
+
+      final Response = await dio.get(url);
+
+      if (Response.statusCode == 200) {
+        setState(() {
+          pin = Response.data;
+        });
+        print(pin);
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (E) {
+      print(E.toString());
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,23 +87,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 )),
             Container(padding: const EdgeInsets.all(50)),
+
             /// input Email to send reset the password
             Container(
               padding: const EdgeInsets.all(5),
               child: TextFormField(
+                controller: EmailController,
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(width: 1, color: Colors.black),
+                      borderSide:
+                          const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: 'Email',
                   prefixIcon: const Icon(Icons.perm_phone_msg),
                 ),
               ),
             ),
+
             /// Send message button
             Container(
                 height: 50,
@@ -75,11 +117,18 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     'Send Message',
                     style: TextStyle(fontSize: 25),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const LogIn()));
-                    });
+                  onPressed: () async {
+                    bool t = await GetPinFun();
+                    if (t) {
+                      setState(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LogIn())); // new password
+                      });
+                    } else {
+                      // no Email found
+                    }
                   },
                 )),
           ],

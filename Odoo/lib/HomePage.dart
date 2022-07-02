@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:odoo/CreateTable.dart';
 import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/TablesDatabase.dart';
-class HomePage extends StatefulWidget {
+
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePage();
+  Widget build(BuildContext context) {
+    return HomePageF();
+  }
 }
 
-class _HomePage extends State<HomePage> {
+class HomePageF extends StatefulWidget {
+  const HomePageF({Key? key}) : super(key: key);
+
+  @override
+  State<HomePageF> createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePageF> {
   bool subdrawer1 = false;
   bool subdrawer2 = false;
   bool subdrawer3 = false;
@@ -21,36 +32,56 @@ class _HomePage extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
-          child: const Text('Back',style: TextStyle(fontSize: 25),),
+      body: Column(children: [
+        ElevatedButton(
+          child: const Text(
+            'Back',
+            style: TextStyle(fontSize: 25),
+          ),
           onPressed: () {
             setState(() {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const LogIn()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const LogIn()));
             });
           },
         ),
-          ElevatedButton(
-            child: const Text('TablesBataBase',style: TextStyle(fontSize: 25),),
-            onPressed: () {
-              setState(() {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const Tables()));
-              });
-            },
+        ElevatedButton(
+          child: const Text(
+            'TablesBataBase',
+            style: TextStyle(fontSize: 25),
           ),
-        ]
-      ),
+          onPressed: () {
+            setState(() {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Tables()));
+            });
+          },
+        ),
+        ElevatedButton(
+          child: const Text(
+            'CreateTable',
+            style: TextStyle(fontSize: 25),
+          ),
+          onPressed: () {
+            setState(() {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const CreateTable()));
+            });
+          },
+        ),
+      ]),
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
             const DrawerHeader(
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                    Colors.indigo,
-                    Colors.blue,
-                  ])),
-              child:Text("Odoo", style: TextStyle(fontSize: 35),
+                Colors.indigo,
+                Colors.blue,
+              ])),
+              child: Text(
+                "Odoo",
+                style: TextStyle(fontSize: 35),
               ),
             ),
             ///////////// Fist Choose
@@ -66,13 +97,15 @@ class _HomePage extends State<HomePage> {
               ),
               subtitle: subdrawer1
                   ? Column(
-                children: [
-                  TextButton(onPressed: () {}, child: const Text("1.1")),
-                  TextButton(onPressed: () {}, child: const Text("1.2")),
-                  TextButton(onPressed: () {}, child: const Text("1.3")),
-                  TextButton(onPressed: () {}, child: const Text("1.4")),
-                ],)
-                  : null, ),
+                      children: [
+                        TextButton(onPressed: () {}, child: const Text("1.1")),
+                        TextButton(onPressed: () {}, child: const Text("1.2")),
+                        TextButton(onPressed: () {}, child: const Text("1.3")),
+                        TextButton(onPressed: () {}, child: const Text("1.4")),
+                      ],
+                    )
+                  : null,
+            ),
             ///////////// Second Choose
             ListTile(
               title: const Text('The Second'),
@@ -86,11 +119,16 @@ class _HomePage extends State<HomePage> {
               ),
               subtitle: subdrawer2
                   ? Column(
-                children: [
-                  TextButton(onPressed: () {}, child: const Text("2.1")),
-                  TextButton(onPressed: () {}, child: const Text("2.2"),),
-                ],)
-                  : null,),
+                      children: [
+                        TextButton(onPressed: () {}, child: const Text("2.1")),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text("2.2"),
+                        ),
+                      ],
+                    )
+                  : null,
+            ),
             //////////// Third Choose
             ListTile(
               title: const Text('The Third '),
@@ -104,35 +142,42 @@ class _HomePage extends State<HomePage> {
               ),
               subtitle: subdrawer4
                   ? Column(
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        setState(() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute( builder: (context) => const Registration())); });
-                      }, child: const Text("3.1 ")),
-                  TextButton(
-                      onPressed: () {
-                        setState(() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Registration()));
-                        });
-                      },
-                      child: const Text("3.2")),
-                  TextButton(
-                      onPressed: () {
-                        setState(() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Registration()));
-                        });
-                      },
-                      child: const Text("3.3")),
-                ],
-              )
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Registration()));
+                              });
+                            },
+                            child: const Text("3.1 ")),
+                        TextButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Registration()));
+                              });
+                            },
+                            child: const Text("3.2")),
+                        TextButton(
+                            onPressed: () {
+                              setState(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Registration()));
+                              });
+                            },
+                            child: const Text("3.3")),
+                      ],
+                    )
                   : null,
             ),
             //////////// Four Choose
