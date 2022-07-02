@@ -33,7 +33,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   Future<bool> LogInFun() async {
     try {
-      String url = "http://localhost:8080/api/signin/";
+      String url = "http://127.0.0.1:8080/api/signin/";
       List<String>? data;
       String? res;
       url += nameController.text + "+" + passwordController.text;
