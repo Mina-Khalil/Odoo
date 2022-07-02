@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:odoo/CreateTable.dart';
 import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/TablesDatabase.dart';
@@ -40,15 +39,7 @@ class _HomePage extends State<HomePage> {
               });
             },
           ),
-          ElevatedButton(
-            child: const Text('CreateTable',style: TextStyle(fontSize: 25),),
-            onPressed: () {
-              setState(() {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const CreateTable()));
-              });
-            },
-          ),
-    ]
+        ]
       ),
       drawer: Drawer(
         child: ListView(

@@ -9,7 +9,7 @@ class Registration extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: const Text("Registration"),
           leading: BackButton(
-            color: Colors.black,
+            color: Colors.white,
             onPressed: () {
               Navigator.push(
                 context,

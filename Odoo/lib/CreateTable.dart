@@ -22,8 +22,8 @@ class _CreateTableState extends State<CreateTable> {
         title: const Text("Create Table"),
       ),
       body: Form(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: ListView(
+         // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -110,23 +110,21 @@ class _CreateTableState extends State<CreateTable> {
                         ),
                       );
                     })),
-            SizedBox(
-                height: MediaQuery.of(context).size.height * 10 / 100,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                          onPressed: () async {
-                            setState(() {});
-                          },
-                          icon: const Icon(Icons.add)),
-                      IconButton(
-                          onPressed: () async {},
-                          icon: const Icon(Icons.delete)),
-                      IconButton(
-                          onPressed: () async {},
-                          icon: const Icon(Icons.create_rounded)),
-                    ]))
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                      onPressed: () async {
+                        setState(() {});
+                      },
+                      icon: const Icon(Icons.add)),
+                  IconButton(
+                      onPressed: () async {},
+                      icon: const Icon(Icons.delete)),
+                  IconButton(
+                      onPressed: () async {},
+                      icon: const Icon(Icons.create_rounded)),
+                ])
           ],
         ),
       ),
