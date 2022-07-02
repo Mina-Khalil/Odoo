@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odoo/RestPassword.dart';
 import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/provider/my_provider.dart';
@@ -79,6 +80,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Registration()),
+                    );
+                  },
+                )),
+            Container(
+                height: 50,
+                padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
+                child: ElevatedButton(
+                  child: const Text(
+                    'databaes',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RestPassword()),
                     );
                   },
                 )),

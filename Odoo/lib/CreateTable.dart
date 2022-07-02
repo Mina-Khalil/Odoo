@@ -1,78 +1,21 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:odoo/provider/my_provider.dart';
-import 'package:provider/provider.dart';
 
-class CreateTable extends StatelessWidget {
+class CreateTable extends StatefulWidget {
   const CreateTable({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return CreateTablef();
-  }
+  State<CreateTable> createState() => _CreateTableState();
 }
 
-class CreateTablef extends StatefulWidget {
-  const CreateTablef({Key? key}) : super(key: key);
-
-  @override
-  State<CreateTablef> createState() => _CreateTableState();
-}
-
-TextEditingController columnNameController = TextEditingController();
-TextEditingController TableName = TextEditingController();
+TextEditingController columnLength = TextEditingController();
 bool show = false;
 int length = 0;
-List<String> coulmnName = [];
-List<String> typeName = [];
-String? datavalue;
 
-class _CreateTableState extends State<CreateTablef> {
-  Future<bool> CreateTableFun() async {
-    try {
-      String url = "http://192.168.1.4:8080/api/createtable/";
-      List<String>? data;
-      String? res;
-      url += Provider.of<MyProvider>(context, listen: false).id +
-          "+" +
-          Provider.of<MyProvider>(context, listen: false).token +
-          "+";
-      url += "kerodb1" + "+";
-      url += TableName.text + "+";
-      print(datavalue);
-      print(columnNameController.text);
-      coulmnName.add(columnNameController.text);
-      typeName.add(datavalue!);
-      url += (coulmnName.join(',')) + "+";
-      url += (typeName.join(','));
-
-      final Dio dio = Dio();
-
-      print(url);
-
-      final Response = await dio.get(url);
-
-      if (Response.statusCode == 200) {
-        setState(() {
-          res = Response.data;
-        });
-        data = res!.split("\n");
-        //print(data);
-        Provider.of<MyProvider>(context, listen: false)
-            .setData(data[1], data[0]);
-
-        return true;
-      } else {
-        return false;
-      }
-    } catch (E) {
-      print(E.toString());
-      return false;
-    }
-  }
-
+class _CreateTableState extends State<CreateTable> {
   @override
   Widget build(BuildContext context) {
+    var textFormNameTableController;
+    String? datavalue;
     return Scaffold(
       //backgroundColor: Colors.blue,
       appBar: AppBar(
@@ -80,12 +23,12 @@ class _CreateTableState extends State<CreateTablef> {
       ),
       body: Form(
         child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+         // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                controller: TableName,
+                controller: textFormNameTableController,
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
                 },
@@ -93,8 +36,7 @@ class _CreateTableState extends State<CreateTablef> {
                 decoration: InputDecoration(
                   labelText: "Name Table",
                   enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(width: 1, color: Colors.black87),
+                      borderSide: const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                 ),
               ),
@@ -111,78 +53,78 @@ class _CreateTableState extends State<CreateTablef> {
               trailing: IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  if (columnNameController.text != null && datavalue != null) {
-                    coulmnName.add(columnNameController.text);
-                    typeName.add(datavalue!);
-                    columnNameController.text = "";
-                    datavalue = null;
-                    setState(() {
-                      length++;
-                    });
-                  }
+                  setState(() {
+                    length++;
+                  });
                 },
               ),
             ),
             SizedBox(
                 height: MediaQuery.of(context).size.height * 50 / 100,
-                child: ListTile(
-                  title: Column(
-                    children: [
-                      TextFormField(
-                        controller: columnNameController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          labelText: "Name DataType",
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1, color: Colors.black87),
-                              borderRadius: BorderRadius.circular(15)),
+                child: ListView.builder(
+                    controller: null,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Column(
+                          children: [
+                            TextFormField(
+                              controller: columnLength,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                labelText: "Name DataType",
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1, color: Colors.black87),
+                                    borderRadius: BorderRadius.circular(15)),
+                              ),
+                            ),
+                            DropdownButtonFormField<String>(
+                              hint: const Text(" Select Type"),
+                              value: datavalue,
+                              items:
+                              ["int", "string", "bool", "Date"].map((item) {
+                                return DropdownMenuItem<String>(
+                                  child: Text(item),
+                                  value: item,
+                                );
+                              }).toList(),
+                              onChanged: (String? newval) {
+                                setState(() {
+                                  datavalue = newval;
+                                });
+                              },
+                            ),
+                            Column(
+                              children: const [
+                                Divider(
+                                  indent: 0,
+                                  endIndent: 5,
+                                  thickness: 5,
+                                  color: Colors.blueGrey,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                      DropdownButtonFormField<String>(
-                        hint: const Text(" Select Type"),
-                        value: datavalue,
-                        items: ["int", "string", "bool", "Date"].map((item) {
-                          return DropdownMenuItem<String>(
-                            child: Text(item),
-                            value: item,
-                          );
-                        }).toList(),
-                        onChanged: (String? newval) {
-                          setState(() {
-                            datavalue = newval;
-                          });
-                        },
-                      ),
-                      Column(
-                        children: const [
-                          Divider(
-                            indent: 0,
-                            endIndent: 5,
-                            thickness: 5,
-                            color: Colors.blueGrey,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-
-                //  final ID = country![index].id;
-                ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              IconButton(
-                  onPressed: () async {
-                    await CreateTableFun();
-                    setState(() {});
-                  },
-                  icon: const Icon(Icons.add)),
-              IconButton(
-                  onPressed: () async {}, icon: const Icon(Icons.delete)),
-              IconButton(
-                  onPressed: () async {},
-                  icon: const Icon(Icons.create_rounded)),
-            ])
+                      );
+                    })),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                      onPressed: () async {
+                        setState(() {});
+                      },
+                      icon: const Icon(Icons.add)),
+                  IconButton(
+                      onPressed: () async {},
+                      icon: const Icon(Icons.delete)),
+                  IconButton(
+                      onPressed: () async {},
+                      icon: const Icon(Icons.create_rounded)),
+                ])
           ],
         ),
       ),
