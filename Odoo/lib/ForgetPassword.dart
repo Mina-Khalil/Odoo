@@ -59,7 +59,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(width: 1, color: Colors.white),
+                      borderSide: const BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: 'Email',
                   prefixIcon: const Icon(Icons.perm_phone_msg),
