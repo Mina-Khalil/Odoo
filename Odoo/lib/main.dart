@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
+import 'package:odoo/provider/my_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,14 +11,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-            centerTitle: true,
-            title: const Text("Odoo",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold))),
-        body: const MyStatefulWidget(),
+    return ChangeNotifierProvider<MyProvider>(
+      create: (_) => MyProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+              centerTitle: true,
+              title: const Text("Odoo",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold))),
+          body: const MyStatefulWidget(),
+        ),
       ),
     );
   }
@@ -58,7 +63,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const LogIn()),
+                      MaterialPageRoute(builder: (context) => LogIn()),
                     );
                   },
                 )),
@@ -73,8 +78,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const Registration()),
+                      MaterialPageRoute(builder: (context) => Registration()),
                     );
                   },
                 )),
