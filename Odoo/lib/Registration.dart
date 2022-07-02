@@ -7,13 +7,14 @@ import 'provider/my_provider.dart';
 
 class Registration extends StatelessWidget {
   const Registration({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Registration"),
         leading: BackButton(
-          color: Colors.black,
+          color: Colors.white,
           onPressed: () {
             Navigator.push(
               context,
@@ -46,7 +47,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   Future<bool> SignUpFun() async {
     try {
-      String url = "http://192.168.1.4:8080/api/newuser/";
+      String url = "http://localhost:8080/api/newuser/";
 
       url += FirstNameController.text +
           LastNameController.text +
@@ -91,7 +92,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                          const BorderSide(width: 1, color: Colors.black87),
+                      const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: 'First Name',
                   prefixIcon: const Icon(Icons.person),
@@ -111,7 +112,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                          const BorderSide(width: 1, color: Colors.black87),
+                      const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: ' Last Name',
                   prefixIcon: const Icon(Icons.person),
@@ -131,7 +132,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                          const BorderSide(width: 1, color: Colors.black87),
+                      const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: ' Number Phone',
                   prefixIcon: const Icon(Icons.phone_android),
@@ -151,7 +152,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                          const BorderSide(width: 1, color: Colors.black87),
+                      const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: 'E-mail',
                   prefixIcon: const Icon(Icons.email),
@@ -165,14 +166,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               child: TextFormField(
                 controller: PasswordController,
                 obscureText:
-                    !_passwordVisible, //This will obscure text dynamically
+                !_passwordVisible, //This will obscure text dynamically
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                          const BorderSide(width: 1, color: Colors.black87),
+                      const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: ' Password ',
                   prefixIcon: const Icon(
@@ -200,14 +201,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               child: TextFormField(
                 controller: ConfirmPasswordController,
                 obscureText:
-                    !_confirmaPaVisible, //This will obscure text dynamically
+                !_confirmaPaVisible, //This will obscure text dynamically
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                          const BorderSide(width: 1, color: Colors.black87),
+                      const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: ' Confirm Password ',
                   prefixIcon: const Icon(Icons.lock_outline),
@@ -236,48 +237,129 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   'Create',
                   style: TextStyle(fontSize: 35),
                 ),
-                onPressed: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    content: const Text('complete the addition'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            // clear All data
-                          });
-                        },
-                        child: const Text('Cancel'),
+                onPressed: () {
+                  setState(() {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        content: const Text('complete the addition'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context, 'Cancel');
+                              setState(() {
+                                FirstNameController.clear();
+                                LastNameController.clear();
+                                PhoneNumberController.clear();
+                                EmailController.clear();
+                                ConfirmPasswordController.clear();
+                                PasswordController.clear();
+                              });
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() async {
+                                if (PasswordController.text ==
+                                    ConfirmPasswordController.text) {
+
+                                  bool t = await SignUpFun();
+                                  if (t) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              content: Text('Successful'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context, 'Ok');
+                                                    setState(() {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                LogIn()),
+                                                      );
+                                                    });
+                                                  },
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            ));
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              content: Text('Wrong Connection'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context, 'Cancel');
+                                                    setState(() {
+                                                      FirstNameController
+                                                          .clear();
+                                                      LastNameController
+                                                          .clear();
+                                                      PhoneNumberController
+                                                          .clear();
+                                                      EmailController.clear();
+                                                      ConfirmPasswordController
+                                                          .clear();
+                                                      PasswordController
+                                                          .clear();
+                                                    });
+                                                  },
+                                                  child: const Text('Cancel'),
+                                                ),
+                                              ],
+                                            ));
+
+                                    // error in connection or data
+                                  }
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            content: Text('ُWrong Password'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(
+                                                      context, 'Cancel');
+                                                  setState(() {
+                                                    FirstNameController.clear();
+                                                    LastNameController.clear();
+                                                    PhoneNumberController
+                                                        .clear();
+                                                    EmailController.clear();
+                                                    ConfirmPasswordController
+                                                        .clear();
+                                                    PasswordController.clear();
+                                                  });
+                                                },
+                                                child: const Text('Cancel'),
+                                              ),
+                                            ],
+                                          ));
+
+                                  //error in connection or data
+                                }
+                              });
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
                       ),
-                      TextButton(
-                        onPressed: () {
-                          setState(() async {
-                            if (PasswordController.text ==
-                                ConfirmPasswordController.text) {
-                              bool t = await SignUpFun();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LogIn()));
-                              // if (t) {
-                              //   // return succeded
-                              //   Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) => LogIn()));
-                              // } else {
-                              //   // error in connection or data
-                              // }
-                            } else {
-                              //error in connection or data
-                            }
-                          });
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  ),
-                ),
+                    );
+                  });
+                },
               ),
             ),
           ],

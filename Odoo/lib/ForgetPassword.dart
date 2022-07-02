@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:odoo/LoginPage.dart';
+import 'package:odoo/RestPassword.dart';
 import 'package:odoo/provider/my_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       home: Scaffold(
         appBar: AppBar(
           leading: BackButton(
-            color: Colors.black,
+            color: Colors.white,
             onPressed: () {
               Navigator.push(
                 context,
@@ -124,7 +125,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LogIn())); // new password
+                                builder: (context) => RestPassword())); // new password
                       });
                     } else {
                       // no Email found

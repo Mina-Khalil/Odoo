@@ -40,6 +40,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   var _confirmaPaVisible = false;
   TextEditingController ConfirmPasswordController = TextEditingController();
   TextEditingController PasswordController = TextEditingController();
+  TextEditingController PinController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +61,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextFormField(
+                controller: PinController,
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
@@ -140,20 +143,124 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
             /// Send message button
             Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: ElevatedButton(
-                  child: const Text(
-                    'Create',
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const LogIn()));
-                    });
-                  },
-                )),
+              height: 70,
+              padding: const EdgeInsets.fromLTRB(100, 20, 100, 0),
+              child: ElevatedButton(
+                child: const Text(
+                  'Create',
+                  style: TextStyle(fontSize: 35),
+                ),
+                onPressed: () {
+                  setState(() {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        content: const Text('Rest The Password'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context, 'Cancel');
+                              setState(() {
+                                ConfirmPasswordController.clear();
+                                PasswordController.clear();
+                              });
+                            },
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() async {
+                                if (PasswordController.text ==
+                                    ConfirmPasswordController.text) {
+                                 // bool t = await SignUpFun();
+                                  if (true) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              content: Text('Successful'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context, 'Ok');
+                                                    setState(() {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                LogIn()),
+                                                      );
+                                                    });
+                                                  },
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            ));
+                                  } else
+                                    {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              content: Text('Wrong Connection'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context, 'Cancel');
+                                                    setState(() {
+                                                      PinController.clear();
+                                                      ConfirmPasswordController
+                                                          .clear();
+                                                      PasswordController
+                                                          .clear();
+                                                    });
+                                                  },
+                                                  child: const Text('Cancel'),
+                                                ),
+                                              ],
+                                            ));
+
+                                    // error in connection or data
+                                  }
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            content: Text('Not Same Password'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(
+                                                      context, 'Cancel');
+                                                  setState(() {
+                                                    PinController.clear();
+                                                    ConfirmPasswordController
+                                                        .clear();
+                                                    PasswordController.clear();
+                                                  });
+                                                },
+                                                child: const Text('Cancel'),
+                                              ),
+                                            ],
+                                          ));
+
+                                  //error in connection or data
+                                }
+                              });
+                            } ,
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  });
+                },
+              ),
+            ),
           ],
         ));
   }
