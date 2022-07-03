@@ -40,7 +40,7 @@ class _CreateTableState extends State<CreateTablef> {
   }
   Future<bool> CreateTableFun() async {
     try {
-      String url = "http://192.168.1.4:8080/api/createtable/";
+      String url = "http://20.89.56.192:8080/api/createtable/";
       List<String>? data;
       String? res;
       url += Provider.of<MyProvider>(context, listen: false).id +

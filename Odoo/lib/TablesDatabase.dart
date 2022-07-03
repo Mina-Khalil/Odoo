@@ -62,7 +62,7 @@ class _TablesState extends State<Tables> {
 
   Future<bool> GetDataTables() async {
     try {
-      String url = "http://192.168.1.4:8080/api/getnametype/";
+      String url = "http://20.89.56.192:8080/api/getnametype/";
       List<String>? Data;
       String? res;
       //String id = Provider.of<MyProvider>(context, listen: false).id;

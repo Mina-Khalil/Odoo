@@ -47,7 +47,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController EmailController = new TextEditingController();
   Future<bool> GetPinFun() async {
     try {
-      String url = "http://192.168.1.4:8080/api/sendpin/";
+      String url = "http://20.89.56.192:8080/api/sendpin/";
       List<String>? data;
       String? res;
       url += EmailController.text;
@@ -125,7 +125,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RestPassword())); // new password
+                                builder: (context) =>
+                                    RestPassword())); // new password
                       });
                     } else {
                       // no Email found
