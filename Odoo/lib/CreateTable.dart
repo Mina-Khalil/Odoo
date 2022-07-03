@@ -184,7 +184,11 @@ class _CreateTableState extends State<CreateTablef> {
               IconButton(
                   onPressed: () async {
                     await CreateTableFun();
-                    setState(() {});
+                    setState(() {
+                      datavalue = null;
+                      TableName.clear();
+                      columnNameController.clear();
+                    });
                   },
                   icon: const Icon(Icons.add)),
               IconButton(

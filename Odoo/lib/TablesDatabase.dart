@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class Tables extends StatefulWidget {
   String? DataBaseName;
-
+  String? datavalue;
   Tables(String data) {
     DataBaseName = data;
   }
@@ -25,6 +25,9 @@ class _TablesState extends State<Tables> {
 
   var myController = TextEditingController();
   List<dynamic>? tables = [];
+  List<String>? CName;
+  List<String>? Type;
+  String? tableName;
   Future<bool> GetTables() async {
     try {
       String url = "http://192.168.1.4:8080/api/selectall/";
@@ -36,16 +39,57 @@ class _TablesState extends State<Tables> {
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
 
-      url += "therooteddata+tables+name+name+" + Dname! + "+true";
+      url += "therooteddata+tables+name+schema_id+" + Dname! + "+true";
       final Dio dio = Dio();
       print(url);
       final Response = await dio.get(url);
 
-      if (Response.statusCode == 200) {
+      if (Response.statusCode == 200 && Response.data != null) {
         setState(() {
           tables = Response.data;
         });
         //DataBases = res!.split("\t");
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (E) {
+      print(E.toString());
+      return false;
+    }
+  }
+
+  Future<bool> GetDataTables() async {
+    try {
+      String url = "http://192.168.1.4:8080/api/getnametype/";
+      List<dynamic>? Data;
+      String? res;
+      String id = Provider.of<MyProvider>(context, listen: false).id;
+      url += Provider.of<MyProvider>(context, listen: false).id +
+          "+" +
+          Provider.of<MyProvider>(context, listen: false).token +
+          "+";
+
+      url += Dname! + "+" + tableName!;
+      final Dio dio = Dio();
+      print(url);
+      final r = await dio.get(url);
+      print(r);
+      if (r.statusCode == 200) {
+        setState(() {
+          Data = r.data;
+        });
+        print(Data);
+        // Data = res!.split("\t");
+        for (int i = 0; i < Data!.length / 2; i++) {
+          CName!.add(Data![i]);
+        }
+        for (double i = Data!.length / 2; i < Data!.length; i++) {
+          Type!.add(Data![i.toInt()]);
+        }
+        print(CName);
+        print(Type);
 
         return true;
       } else {
@@ -109,8 +153,13 @@ class _TablesState extends State<Tables> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 2.0),
                                   child: ElevatedButton(
-                                      onPressed: () {},
-                                      child: Text(e.id!.toString())),
+                                      onPressed: () async {
+                                        setState(() {
+                                          tableName = e;
+                                        });
+                                        await GetDataTables();
+                                      },
+                                      child: Text(e.toString())),
                                 ))
                             .toList()
                       ],
@@ -123,7 +172,7 @@ class _TablesState extends State<Tables> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const CreateTable()));
+                              builder: (context) => CreateTable(Dname!)));
                     });
 
                     // final AlertDialog alert = AlertDialog(
@@ -173,19 +222,38 @@ class _TablesState extends State<Tables> {
               margin: const EdgeInsets.only(top: 0),
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (val) {
-                    return val!.isEmpty ? "No Data" : null;
-                  },
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 1, color: Colors.black),
-                        borderRadius: BorderRadius.circular(15)),
-                    labelText: 'Name DataType',
-                    prefixIcon: const Icon(Icons.edit),
-                  ),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (val) {
+                        return val!.isEmpty ? "No Data" : null;
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(width: 1, color: Colors.black),
+                            borderRadius: BorderRadius.circular(15)),
+                        labelText: 'Name DataType',
+                        prefixIcon: const Icon(Icons.edit),
+                      ),
+                    ),
+                    DropdownButtonFormField<String>(
+                      hint: const Text(" Select Type"),
+                      value: datavalue,
+                      items: ["int", "text", "bool"].map((item) {
+                        return DropdownMenuItem<String>(
+                          child: Text(item),
+                          value: item,
+                        );
+                      }).toList(),
+                      onChanged: (String? newval) {
+                        setState(() {
+                          datavalue = newval;
+                        });
+                      },
+                    ),
+                  ],
                 ),
               )),
           Container(

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:odoo/CreateTable.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/TablesDatabase.dart';
 import 'package:odoo/provider/my_provider.dart';
@@ -32,12 +33,11 @@ class _HomePageState extends State<HomePage> {
       print(url);
       final Response = await dio.get(url);
 
-      if (Response.statusCode == 200) {
+      if (Response.statusCode == 200 && Response.data != null) {
         setState(() {
           DataBases = Response.data;
         });
-        //DataBases = res!.split("\t");
-
+        removenewline();
         return true;
       } else {
         return false;
@@ -69,6 +69,7 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           res = Response.data;
         });
+
         if (res == "db") {
           return false;
         }
@@ -80,6 +81,13 @@ class _HomePageState extends State<HomePage> {
     } catch (E) {
       print(E.toString());
       return false;
+    }
+  }
+
+  void removenewline() {
+    for (var i = 0; i < DataBases!.length; i++) {
+      String str = DataBases![i];
+      DataBases![i] = str.replaceAll("\n", "");
     }
   }
 
@@ -134,7 +142,6 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print(Provider.of<MyProvider>(context, listen: false).id);
           showDialog(
               context: context,
               builder: (BuildContext context) => AlertDialog(
@@ -159,10 +166,11 @@ class _HomePageState extends State<HomePage> {
                       ),
                       TextButton(
                         onPressed: () async {
-                          Navigator.pop(context, 'Ok');
-
                           await CreateDataBase();
                           await GetDataBase();
+
+                          Navigator.pop(context, 'Ok');
+                          CDataBaseController.clear();
                         },
                         child: const Text('Ok'),
                       ),
