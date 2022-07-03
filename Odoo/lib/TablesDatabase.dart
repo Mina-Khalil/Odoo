@@ -23,17 +23,17 @@ class _TablesState extends State<Tables> {
     Dname = DataBaseName;
   }
 
-  var myController = TextEditingController();
+  TextEditingController columnNameController = TextEditingController();
   List<dynamic>? tables = [];
   List<String>? CName;
   List<String>? Type;
-  String? tableName;
+  String? tableName = "Users";
   Future<bool> GetTables() async {
     try {
       String url = "http://192.168.1.4:8080/api/selectall/";
       List<String>? data;
-      String? res;
-      String id = Provider.of<MyProvider>(context, listen: false).id;
+      //String? res;
+      //String id = Provider.of<MyProvider>(context, listen: false).id;
       url += Provider.of<MyProvider>(context, listen: false).id +
           "+" +
           Provider.of<MyProvider>(context, listen: false).token +
@@ -63,31 +63,32 @@ class _TablesState extends State<Tables> {
   Future<bool> GetDataTables() async {
     try {
       String url = "http://192.168.1.4:8080/api/getnametype/";
-      List<dynamic>? Data;
+      List<String>? Data;
       String? res;
-      String id = Provider.of<MyProvider>(context, listen: false).id;
+      //String id = Provider.of<MyProvider>(context, listen: false).id;
       url += Provider.of<MyProvider>(context, listen: false).id +
           "+" +
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
-
+      tableName = tableName!.replaceAll("\n", "");
       url += Dname! + "+" + tableName!;
       final Dio dio = Dio();
+      print(tableName! + "aaa");
       print(url);
       final r = await dio.get(url);
-      print(r);
       if (r.statusCode == 200) {
         setState(() {
-          Data = r.data;
+          res = r.data;
         });
+        print(res);
+        Data = res!.split(',');
+        for (int i = 0; i < Data.length / 2; i++) {
+          CName!.add(Data[i]);
+        }
+        for (double i = Data.length / 2; i < Data.length; i++) {
+          Type!.add(Data[i.toInt()]);
+        }
         print(Data);
-        // Data = res!.split("\t");
-        for (int i = 0; i < Data!.length / 2; i++) {
-          CName!.add(Data![i]);
-        }
-        for (double i = Data!.length / 2; i < Data!.length; i++) {
-          Type!.add(Data![i.toInt()]);
-        }
         print(CName);
         print(Type);
 
@@ -101,16 +102,16 @@ class _TablesState extends State<Tables> {
     }
   }
 
-  Widget textField() {
-    return TextField(
-      decoration: const InputDecoration(
-        label: Text("Table name "),
-        hintText: "Name",
-      ),
-      keyboardType: TextInputType.text,
-      controller: myController,
-    );
-  }
+  // Widget textField() {
+  //   return TextField(
+  //     decoration: const InputDecoration(
+  //       label: Text("Table name "),
+  //       hintText: "Name",
+  //     ),
+  //     keyboardType: TextInputType.text,
+  //     controller: myController,
+  //   );
+  // }
 
   List<bool>? IsCkecked = [];
 
@@ -225,7 +226,8 @@ class _TablesState extends State<Tables> {
                 child: Column(
                   children: [
                     TextFormField(
-                      keyboardType: TextInputType.emailAddress,
+                      controller: columnNameController,
+                      keyboardType: TextInputType.text,
                       validator: (val) {
                         return val!.isEmpty ? "No Data" : null;
                       },
@@ -261,12 +263,16 @@ class _TablesState extends State<Tables> {
             child: !show
                 ? null
                 : ListView.builder(
-                    itemCount: 5,
+                    itemCount: CName!.length,
                     itemBuilder: (context, index) {
                       return ListTile(
                         trailing: IconButton(
                           icon: const Icon(Icons.create_rounded),
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              datavalue = Type![index];
+                            });
+                          },
                         ),
                         leading: Checkbox(
                           value: IsCkecked![index],
@@ -276,8 +282,8 @@ class _TablesState extends State<Tables> {
                             });
                           },
                         ),
-                        title: const Text("Name: "),
-                        subtitle: const Text("ID: "),
+                        title: Text("Name: " + CName![index]),
+                        subtitle: Text("Type: " + Type![index]),
                       );
                     },
                   ),
@@ -287,7 +293,7 @@ class _TablesState extends State<Tables> {
             children: [
               IconButton(
                   onPressed: () async {
-                    setState(() {});
+                    await GetDataTables();
                   },
                   icon: const Icon(Icons.add)),
               IconButton(
