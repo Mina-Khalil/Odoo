@@ -74,295 +74,254 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     }
   }
 
+  final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(10),
-        child: ListView(
-          children: <Widget>[
-            /// First Name
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: TextFormField(
-                controller: FirstNameController,
-                keyboardType: TextInputType.name,
-                validator: (val) {
-                  return val!.isEmpty ? "No Data" : null;
-                },
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(width: 1, color: Colors.black87),
-                      borderRadius: BorderRadius.circular(15)),
-                  labelText: 'First Name',
-                  prefixIcon: const Icon(Icons.person),
-                ),
-              ),
-            ),
-
-            /// Last Name
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: TextFormField(
-                controller: LastNameController,
-                keyboardType: TextInputType.name,
-                validator: (val) {
-                  return val!.isEmpty ? "No Data" : null;
-                },
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(width: 1, color: Colors.black87),
-                      borderRadius: BorderRadius.circular(15)),
-                  labelText: ' Last Name',
-                  prefixIcon: const Icon(Icons.person),
-                ),
-              ),
-            ),
-
-            ///Number Phone
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: TextFormField(
-                controller: PhoneNumberController,
-                keyboardType: TextInputType.phone,
-                validator: (val) {
-                  return val!.isEmpty ? "No Data" : null;
-                },
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(width: 1, color: Colors.black87),
-                      borderRadius: BorderRadius.circular(15)),
-                  labelText: ' Number Phone',
-                  prefixIcon: const Icon(Icons.phone_android),
-                ),
-              ),
-            ),
-
-            ///Email
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: TextFormField(
-                controller: EmailController,
-                keyboardType: TextInputType.emailAddress,
-                validator: (val) {
-                  return val!.isEmpty ? "No Data" : null;
-                },
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(width: 1, color: Colors.black87),
-                      borderRadius: BorderRadius.circular(15)),
-                  labelText: 'E-mail',
-                  prefixIcon: const Icon(Icons.email),
-                ),
-              ),
-            ),
-
-            /// Password
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(
-                controller: PasswordController,
-                obscureText:
-                !_passwordVisible, //This will obscure text dynamically
-                validator: (val) {
-                  return val!.isEmpty ? "No Data" : null;
-                },
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(width: 1, color: Colors.black87),
-                      borderRadius: BorderRadius.circular(15)),
-                  labelText: ' Password ',
-                  prefixIcon: const Icon(
-                    Icons.lock_outline,
+    return Form(
+      key: _keyForm,
+      child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView(
+            children: <Widget>[
+              /// First Name
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: FirstNameController,
+                  keyboardType: TextInputType.name,
+                  validator: (val) {
+                    return val!.isEmpty ? "No Data" : null;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black87),
+                        borderRadius: BorderRadius.circular(15)),
+                    labelText: 'First Name',
+                    prefixIcon: const Icon(Icons.person),
                   ),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _passwordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                ),
+              ),
+
+              /// Last Name
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: LastNameController,
+                  keyboardType: TextInputType.name,
+                  validator: (val) {
+                    return val!.isEmpty ? "No Data" : null;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black87),
+                        borderRadius: BorderRadius.circular(15)),
+                    labelText: ' Last Name',
+                    prefixIcon: const Icon(Icons.person),
+                  ),
+                ),
+              ),
+
+              ///Number Phone
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: PhoneNumberController,
+                  keyboardType: TextInputType.phone,
+                  validator: (val) {
+                    return val!.isEmpty ? "No Data" : null;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black87),
+                        borderRadius: BorderRadius.circular(15)),
+                    labelText: ' Number Phone',
+                    prefixIcon: const Icon(Icons.phone_android),
+                  ),
+                ),
+              ),
+
+              ///Email
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: EmailController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (val) {
+                    return val!.isEmpty ? "No Data" : null;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black87),
+                        borderRadius: BorderRadius.circular(15)),
+                    labelText: 'E-mail',
+                    prefixIcon: const Icon(Icons.email),
+                  ),
+                ),
+              ),
+
+              /// Password
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextFormField(
+                  controller: PasswordController,
+                  obscureText:
+                      !_passwordVisible, //This will obscure text dynamically
+                  validator: (val) {
+                    return val!.isEmpty ? "No Data" : null;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black87),
+                        borderRadius: BorderRadius.circular(15)),
+                    labelText: ' Password ',
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _passwordVisible = !_passwordVisible;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ),
-
-            /// Confirm Password
-            Container(
-              padding: const EdgeInsets.all(5),
-              child: TextFormField(
-                controller: ConfirmPasswordController,
-                obscureText:
-                !_confirmaPaVisible, //This will obscure text dynamically
-                validator: (val) {
-                  return val!.isEmpty ? "No Data" : null;
-                },
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide:
-                      const BorderSide(width: 1, color: Colors.black87),
-                      borderRadius: BorderRadius.circular(15)),
-                  labelText: ' Confirm Password ',
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _confirmaPaVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _confirmaPaVisible = !_confirmaPaVisible;
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ),
-
-            /// Create Account button
-            Container(
-              height: 70,
-              padding: const EdgeInsets.fromLTRB(100, 20, 100, 0),
-              child: ElevatedButton(
-                child: const Text(
-                  'Create',
-                  style: TextStyle(fontSize: 35),
-                ),
-                onPressed: () {
-                  setState(() {
-                    showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        content: const Text('complete the addition'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context, 'Cancel');
-                              setState(() {
-                                FirstNameController.clear();
-                                LastNameController.clear();
-                                PhoneNumberController.clear();
-                                EmailController.clear();
-                                ConfirmPasswordController.clear();
-                                PasswordController.clear();
-                              });
-                            },
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              setState(() async {
-                                if (PasswordController.text ==
-                                    ConfirmPasswordController.text) {
-
-                                  bool t = await SignUpFun();
-                                  if (t) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              content: Text('Successful'),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(
-                                                        context, 'Ok');
-                                                    setState(() {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                LogIn()),
-                                                      );
-                                                    });
-                                                  },
-                                                  child: const Text('OK'),
-                                                ),
-                                              ],
-                                            ));
-                                  } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              content: Text('Wrong Connection'),
-                                              actions: <Widget>[
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(
-                                                        context, 'Cancel');
-                                                    setState(() {
-                                                      FirstNameController
-                                                          .clear();
-                                                      LastNameController
-                                                          .clear();
-                                                      PhoneNumberController
-                                                          .clear();
-                                                      EmailController.clear();
-                                                      ConfirmPasswordController
-                                                          .clear();
-                                                      PasswordController
-                                                          .clear();
-                                                    });
-                                                  },
-                                                  child: const Text('Cancel'),
-                                                ),
-                                              ],
-                                            ));
-
-                                    // error in connection or data
-                                  }
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                            content: Text('ُWrong Password'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(
-                                                      context, 'Cancel');
-                                                  setState(() {
-                                                    FirstNameController.clear();
-                                                    LastNameController.clear();
-                                                    PhoneNumberController
-                                                        .clear();
-                                                    EmailController.clear();
-                                                    ConfirmPasswordController
-                                                        .clear();
-                                                    PasswordController.clear();
-                                                  });
-                                                },
-                                                child: const Text('Cancel'),
-                                              ),
-                                            ],
-                                          ));
-
-                                  //error in connection or data
-                                }
-                              });
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                       ),
-                    );
-                  });
-                },
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ],
-        ));
+
+              /// Confirm Password
+              Container(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
+                  controller: ConfirmPasswordController,
+                  obscureText:
+                      !_confirmaPaVisible, //This will obscure text dynamically
+                  validator: (val) {
+                    return val!.isEmpty ? "No Data" : null;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(width: 1, color: Colors.black87),
+                        borderRadius: BorderRadius.circular(15)),
+                    labelText: ' Confirm Password ',
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _confirmaPaVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _confirmaPaVisible = !_confirmaPaVisible;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+
+              /// Create Account button
+              Container(
+                height: 70,
+                padding: const EdgeInsets.fromLTRB(100, 20, 100, 0),
+                child: ElevatedButton(
+                  child: const Text(
+                    'Create',
+                    style: TextStyle(fontSize: 35),
+                  ),
+                  onPressed: () {
+                    setState(() async {
+                      if (_keyForm.currentState!.validate()) {
+                        if (PasswordController.text ==
+                            ConfirmPasswordController.text) {
+                          bool t = await SignUpFun();
+                          if (t) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      content: Text('Successful'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, 'Ok');
+                                            setState(() {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LogIn()),
+                                              );
+                                            });
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ));
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      content: Text('Wrong Connection'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, 'ok');
+                                            setState(() {
+                                              FirstNameController.clear();
+                                              LastNameController.clear();
+                                              PhoneNumberController.clear();
+                                              EmailController.clear();
+                                              ConfirmPasswordController.clear();
+                                              PasswordController.clear();
+                                            });
+                                          },
+                                          child: const Text('ok'),
+                                        ),
+                                      ],
+                                    ));
+                          }
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                    content: Text('ُWrong Password'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context, 'ok');
+                                          setState(() {
+                                            FirstNameController.clear();
+                                            LastNameController.clear();
+                                            PhoneNumberController.clear();
+                                            EmailController.clear();
+                                            ConfirmPasswordController.clear();
+                                            PasswordController.clear();
+                                          });
+                                        },
+                                        child: const Text('ok'),
+                                      ),
+                                    ],
+                                  ));
+                        }
+                      }
+                    });
+                  },
+                ),
+              ),
+            ],
+          )),
+    );
   }
 }

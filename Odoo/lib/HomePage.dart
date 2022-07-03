@@ -107,12 +107,10 @@ class _HomePageState extends State<HomePage> {
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context, 'Ok');
-                          setState(() {
-                          });
+                          setState(() {});
                         },
                         child: const Text('Ok'),
                       ),
-
                     ],
                   ));
         },
