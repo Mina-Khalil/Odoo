@@ -1,33 +1,59 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:odoo/CreateTable.dart';
 import 'package:odoo/HomePage.dart';
+import 'package:odoo/provider/my_provider.dart';
+import 'package:provider/provider.dart';
 import 'api/TestAPI.dart';
 import 'package:http/http.dart' as http;
 
 class Tables extends StatefulWidget {
-  const Tables({Key? key}) : super(key: key);
+  String? DataBaseName;
 
+  Tables(String data) {
+    DataBaseName = data;
+  }
   @override
-  State<Tables> createState() => _TablesState();
+  State<Tables> createState() => _TablesState(DataBaseName!);
 }
 
 class _TablesState extends State<Tables> {
-  _TablesState() {
-    fetchalbum();
+  String? Dname;
+  _TablesState(String DataBaseName) {
+    Dname = DataBaseName;
   }
 
   var myController = TextEditingController();
-  List<GetAlbum>? tables = [];
+  List<dynamic>? tables = [];
+  Future<bool> GetTables() async {
+    try {
+      String url = "http://192.168.1.4:8080/api/selectall/";
+      List<String>? data;
+      String? res;
+      String id = Provider.of<MyProvider>(context, listen: false).id;
+      url += Provider.of<MyProvider>(context, listen: false).id +
+          "+" +
+          Provider.of<MyProvider>(context, listen: false).token +
+          "+";
 
-  Future fetchalbum() async {
-    const url = "https://jsonplaceholder.typicode.com/posts";
-    final res = await http.get(Uri.parse(url));
-    if (res.statusCode == 200) {
-      setState(() {
-        tables = getAlbumFromJson(res.body);
-      });
-    } else {
-      throw Exception("error");
+      url += "therooteddata+tables+name+name+" + Dname! + "+true";
+      final Dio dio = Dio();
+      print(url);
+      final Response = await dio.get(url);
+
+      if (Response.statusCode == 200) {
+        setState(() {
+          tables = Response.data;
+        });
+        //DataBases = res!.split("\t");
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (E) {
+      print(E.toString());
+      return false;
     }
   }
 
@@ -48,6 +74,13 @@ class _TablesState extends State<Tables> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await GetTables();
+              },
+              icon: Icon(Icons.search))
+        ],
         title: const Text("Tables DataBase"),
         leading: BackButton(
           color: Colors.white,

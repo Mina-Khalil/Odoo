@@ -1,14 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/TablesDatabase.dart';
-
-class Table {
-  final String name;
-
-  Table({
-    required this.name,
-  });
-}
+import 'package:odoo/provider/my_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,27 +13,78 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static List tables = [
-    Table(name: "kero"),
-    Table(name: "kero"),
-    Table(name: "kero"),
-    Table(name: "kero"),
-    Table(name: "Mina"),
-    Table(name: "Mina"),
-    Table(name: "Mina"),
-    Table(name: "Mina"),
-    Table(name: "MonMon"),
-    Table(name: "MonMon"),
-    Table(name: "MonMon"),
-    Table(name: "MonMon"),
-    Table(name: "kero"),
-    Table(name: "kero"),
-  ];
+  TextEditingController CDataBaseController = TextEditingController();
+
+  List<dynamic>? DataBases = [];
+
+  Future<bool> GetDataBase() async {
+    try {
+      String url = "http://192.168.1.4:8080/api/selectall/";
+      List<String>? data;
+      String? res;
+      String id = Provider.of<MyProvider>(context, listen: false).id;
+      url += Provider.of<MyProvider>(context, listen: false).id +
+          "+" +
+          Provider.of<MyProvider>(context, listen: false).token +
+          "+";
+      url += "therooteddata+schemas+name+user_id+" + id + "+false";
+      final Dio dio = Dio();
+      print(url);
+      final Response = await dio.get(url);
+
+      if (Response.statusCode == 200) {
+        setState(() {
+          DataBases = Response.data;
+        });
+        //DataBases = res!.split("\t");
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (E) {
+      print(E.toString());
+      return false;
+    }
+  }
+
+  Future<bool> CreateDataBase() async {
+    try {
+      String url = "http://192.168.1.4:8080/api/createdb/";
+      List<String>? data;
+      String? res;
+      url += Provider.of<MyProvider>(context, listen: false).id +
+          "+" +
+          Provider.of<MyProvider>(context, listen: false).token +
+          "+";
+      url += CDataBaseController.text +
+          "_" +
+          Provider.of<MyProvider>(context, listen: false).id;
+
+      final Dio dio = Dio();
+      print(url);
+      final Response = await dio.get(url);
+
+      if (Response.statusCode == 200) {
+        setState(() {
+          res = Response.data;
+        });
+        if (res == "db") {
+          return false;
+        }
+        GetDataBase();
+        return true;
+      } else {
+        return false;
+      }
+    } catch (E) {
+      print(E.toString());
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController CDataBaseController = TextEditingController();
-
     bool subdrawer1 = false;
     bool subdrawer2 = false;
     bool subdrawer4 = false;
@@ -46,6 +92,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await GetDataBase();
+              },
+              icon: Icon(Icons.search))
+        ],
       ),
       body: ListView(
         children: [
@@ -60,7 +113,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisSpacing: 10,
               scrollDirection: Axis.vertical,
               children: [
-                ...tables
+                ...DataBases!
                     .map((e) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 2.0),
                           child: ElevatedButton(
@@ -68,10 +121,9 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const Tables()));
+                                        builder: (context) => Tables(e)));
                               },
-                              child:
-                                  SingleChildScrollView(child: Text(e.name))),
+                              child: SingleChildScrollView(child: Text(e))),
                         ))
                     .toList()
               ],
@@ -82,6 +134,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          print(Provider.of<MyProvider>(context, listen: false).id);
           showDialog(
               context: context,
               builder: (BuildContext context) => AlertDialog(
@@ -105,9 +158,11 @@ class _HomePageState extends State<HomePage> {
                         child: const Text('Cancel'),
                       ),
                       TextButton(
-                        onPressed: () {
+                        onPressed: () async {
                           Navigator.pop(context, 'Ok');
-                          setState(() {});
+
+                          await CreateDataBase();
+                          await GetDataBase();
                         },
                         child: const Text('Ok'),
                       ),

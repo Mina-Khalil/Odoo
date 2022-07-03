@@ -4,19 +4,25 @@ import 'package:odoo/provider/my_provider.dart';
 import 'package:provider/provider.dart';
 
 class CreateTable extends StatelessWidget {
-  const CreateTable({Key? key}) : super(key: key);
+  String? DataBaseName;
+  CreateTable(String Dname) {
+    DataBaseName = Dname;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CreateTablef();
+    return CreateTablef(DataBaseName!);
   }
 }
 
 class CreateTablef extends StatefulWidget {
-  const CreateTablef({Key? key}) : super(key: key);
+  String? DataBaseName;
+  CreateTablef(String Dname) {
+    DataBaseName = Dname;
+  }
 
   @override
-  State<CreateTablef> createState() => _CreateTableState();
+  State<CreateTablef> createState() => _CreateTableState(DataBaseName!);
 }
 
 TextEditingController columnNameController = TextEditingController();
@@ -28,6 +34,10 @@ List<String> typeName = [];
 String? datavalue;
 
 class _CreateTableState extends State<CreateTablef> {
+  String? DName;
+  _CreateTableState(String Dname) {
+    DName = Dname;
+  }
   Future<bool> CreateTableFun() async {
     try {
       String url = "http://192.168.1.4:8080/api/createtable/";
@@ -37,7 +47,7 @@ class _CreateTableState extends State<CreateTablef> {
           "+" +
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
-      url += "kerodb1" + "+";
+      url += DName! + "+";
       url += TableName.text + "+";
       print(datavalue);
       print(columnNameController.text);
@@ -142,7 +152,7 @@ class _CreateTableState extends State<CreateTablef> {
                       DropdownButtonFormField<String>(
                         hint: const Text(" Select Type"),
                         value: datavalue,
-                        items: ["int", "string", "bool", "Date"].map((item) {
+                        items: ["int", "text", "bool"].map((item) {
                           return DropdownMenuItem<String>(
                             child: Text(item),
                             value: item,

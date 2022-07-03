@@ -27,8 +27,6 @@ class RestPassword extends StatelessWidget {
 }
 
 class MyStatefulWidget extends StatefulWidget {
-
-
   const MyStatefulWidget({Key? key}) : super(key: key);
 
   @override
@@ -40,11 +38,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   var _confirmaPaVisible = false;
   TextEditingController ConfirmPasswordController = TextEditingController();
   TextEditingController PasswordController = TextEditingController();
-<<<<<<< Updated upstream
   TextEditingController PinController = TextEditingController();
-
-=======
->>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {
@@ -60,41 +54,41 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   'Rest your password',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 )),
-           /// Pin Number
+
+            /// Pin Number
             Container(
               padding: const EdgeInsets.all(10),
               child: TextFormField(
-<<<<<<< Updated upstream
                 controller: PinController,
-=======
->>>>>>> Stashed changes
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(width: 1, color: Colors.black),
+                      borderSide:
+                          const BorderSide(width: 1, color: Colors.black),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: 'Pin',
                   prefixIcon: const Icon(Icons.confirmation_num),
                 ),
               ),
             ),
+
             /// reset password
             Container(
               padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: PasswordController,
                 obscureText:
-                !_passwordVisible, //This will obscure text dynamically
+                    !_passwordVisible, //This will obscure text dynamically
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      const BorderSide(width: 1, color: Colors.black87),
+                          const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: 'New Password ',
                   prefixIcon: const Icon(
@@ -115,20 +109,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
               ),
             ),
+
             /// Confirm Password
             Container(
               padding: const EdgeInsets.all(5),
               child: TextFormField(
                 controller: ConfirmPasswordController,
                 obscureText:
-                !_confirmaPaVisible, //This will obscure text dynamically
+                    !_confirmaPaVisible, //This will obscure text dynamically
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
                 },
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderSide:
-                      const BorderSide(width: 1, color: Colors.black87),
+                          const BorderSide(width: 1, color: Colors.black87),
                       borderRadius: BorderRadius.circular(15)),
                   labelText: ' Confirm Password ',
                   prefixIcon: const Icon(Icons.lock_outline),
@@ -147,9 +142,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 ),
               ),
             ),
+
             /// Send message button
             Container(
-<<<<<<< Updated upstream
               height: 70,
               padding: const EdgeInsets.fromLTRB(100, 20, 100, 0),
               child: ElevatedButton(
@@ -179,7 +174,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                               setState(() async {
                                 if (PasswordController.text ==
                                     ConfirmPasswordController.text) {
-                                 // bool t = await SignUpFun();
+                                  // bool t = await SignUpFun();
                                   if (true) {
                                     showDialog(
                                         context: context,
@@ -197,7 +192,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                                         MaterialPageRoute(
                                                             builder:
                                                                 (context) =>
-                                                                LogIn()),
+                                                                    LogIn()),
                                                       );
                                                     });
                                                   },
@@ -205,8 +200,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                                 ),
                                               ],
                                             ));
-                                  } else
-                                    {
+                                  } else {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) =>
@@ -258,7 +252,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   //error in connection or data
                                 }
                               });
-                            } ,
+                            },
                             child: const Text('OK'),
                           ),
                         ],
@@ -268,22 +262,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
               ),
             ),
-=======
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-                child: ElevatedButton(
-                  child: const Text(
-                    'Create',
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const LogIn()));
-                    });
-                  },
-                )),
->>>>>>> Stashed changes
           ],
         ));
   }

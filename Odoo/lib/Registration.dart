@@ -47,7 +47,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   Future<bool> SignUpFun() async {
     try {
-      String url = "http://localhost:8080/api/newuser/";
+      String url = "http://192.168.1.4:8080/api/newuser/";
 
       url += FirstNameController.text +
           LastNameController.text +
