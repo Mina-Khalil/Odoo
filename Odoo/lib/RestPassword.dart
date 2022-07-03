@@ -40,8 +40,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   var _confirmaPaVisible = false;
   TextEditingController ConfirmPasswordController = TextEditingController();
   TextEditingController PasswordController = TextEditingController();
+<<<<<<< Updated upstream
   TextEditingController PinController = TextEditingController();
 
+=======
+>>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +64,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextFormField(
+<<<<<<< Updated upstream
                 controller: PinController,
+=======
+>>>>>>> Stashed changes
                 keyboardType: TextInputType.emailAddress,
                 validator: (val) {
                   return val!.isEmpty ? "No Data" : null;
@@ -143,6 +149,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
             /// Send message button
             Container(
+<<<<<<< Updated upstream
               height: 70,
               padding: const EdgeInsets.fromLTRB(100, 20, 100, 0),
               child: ElevatedButton(
@@ -261,6 +268,22 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 },
               ),
             ),
+=======
+                height: 50,
+                padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+                child: ElevatedButton(
+                  child: const Text(
+                    'Create',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => const LogIn()));
+                    });
+                  },
+                )),
+>>>>>>> Stashed changes
           ],
         ));
   }
