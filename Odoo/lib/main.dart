@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
 import 'package:odoo/CreateTable.dart';
 import 'package:odoo/HomePage.dart';
-=======
-import 'package:odoo/RestPassword.dart';
->>>>>>> Stashed changes
 import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/RestPassword.dart';
@@ -95,28 +91,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
                 child: ElevatedButton(
                   child: const Text(
-<<<<<<< Updated upstream
                     'HomePagw',
-=======
-                    'databaes',
->>>>>>> Stashed changes
                     style: TextStyle(fontSize: 25),
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
-<<<<<<< Updated upstream
                       MaterialPageRoute(builder: (context) => HomePage()),
                     );
                   },
                 )),
-=======
-                      MaterialPageRoute(builder: (context) => RestPassword()),
-                    );
-                  },
-                )),
-
->>>>>>> Stashed changes
             //////////// create account
           ],
         ));
