@@ -125,8 +125,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    RestPassword())); // new password
+                                builder: (context) => RestPassword())); // new password
                       });
                     } else {
                       // no Email found

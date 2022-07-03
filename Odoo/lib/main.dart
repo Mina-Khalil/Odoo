@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:odoo/CreateTable.dart';
+import 'package:odoo/HomePage.dart';
 import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/RestPassword.dart';
+import 'package:odoo/TablesDatabase.dart';
 import 'package:odoo/provider/my_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +55,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   'Welcome to the Application',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 )),
-            Container(padding: const EdgeInsets.all(120)),
+            Container(padding: const EdgeInsets.all(100)),
             Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
@@ -88,17 +91,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
                 child: ElevatedButton(
                   child: const Text(
-                    'RestPassword',
+                    'HomePagw',
                     style: TextStyle(fontSize: 25),
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RestPassword()),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                     );
                   },
                 )),
-
             //////////// create account
           ],
         ));

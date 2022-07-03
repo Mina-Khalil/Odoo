@@ -1,75 +1,123 @@
 import 'package:flutter/material.dart';
-import 'package:odoo/CreateTable.dart';
-import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/TablesDatabase.dart';
 
-class HomePage extends StatelessWidget {
+class Table {
+  final String name;
+
+  Table({
+    required this.name,
+  });
+}
+
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return HomePageF();
-  }
+  State<HomePage> createState() => _HomePageState();
 }
 
-class HomePageF extends StatefulWidget {
-  const HomePageF({Key? key}) : super(key: key);
+class _HomePageState extends State<HomePage> {
+  static List tables = [
+    Table(name: "kero"),
+    Table(name: "kero"),
+    Table(name: "kero"),
+    Table(name: "kero"),
+    Table(name: "Mina"),
+    Table(name: "Mina"),
+    Table(name: "Mina"),
+    Table(name: "Mina"),
+    Table(name: "MonMon"),
+    Table(name: "MonMon"),
+    Table(name: "MonMon"),
+    Table(name: "MonMon"),
+    Table(name: "kero"),
+    Table(name: "kero"),
+  ];
 
-  @override
-  State<HomePageF> createState() => _HomePage();
-}
-
-class _HomePage extends State<HomePageF> {
-  bool subdrawer1 = false;
-  bool subdrawer2 = false;
-  bool subdrawer3 = false;
-  bool subdrawer4 = false;
-  int page = 0;
   @override
   Widget build(BuildContext context) {
+    TextEditingController CDataBaseController = TextEditingController();
+
+    bool subdrawer1 = false;
+    bool subdrawer2 = false;
+    bool subdrawer4 = false;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: const Text("Home"),
       ),
-      body: Column(children: [
-        ElevatedButton(
-          child: const Text(
-            'Back',
-            style: TextStyle(fontSize: 25),
+      body: ListView(
+        children: [
+          Container(
+            width: 400,
+            height: 550,
+            margin: const EdgeInsets.all(10),
+            color: Colors.grey,
+            child: GridView.count(
+              crossAxisCount: 4,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              scrollDirection: Axis.vertical,
+              children: [
+                ...tables
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Tables()));
+                              },
+                              child:
+                                  SingleChildScrollView(child: Text(e.name))),
+                        ))
+                    .toList()
+              ],
+            ),
           ),
-          onPressed: () {
-            setState(() {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const LogIn()));
-            });
-          },
-        ),
-        ElevatedButton(
-          child: const Text(
-            'TablesBataBase',
-            style: TextStyle(fontSize: 25),
-          ),
-          onPressed: () {
-            setState(() {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Tables()));
-            });
-          },
-        ),
-        ElevatedButton(
-          child: const Text(
-            'CreateTable',
-            style: TextStyle(fontSize: 25),
-          ),
-          onPressed: () {
-            setState(() {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const CreateTable()));
-            });
-          },
-        ),
-      ]),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                    title: const Text("Enter Name DataBase"),
+                    content: TextFormField(
+                      controller: CDataBaseController,
+                      keyboardType: TextInputType.name,
+                      validator: (val) {
+                        return val!.isEmpty ? "No Data" : null;
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, 'Cancel');
+                          CDataBaseController.clear();
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context, 'Ok');
+                          setState(() {
+                          });
+                        },
+                        child: const Text('Ok'),
+                      ),
+
+                    ],
+                  ));
+        },
+        child: const Icon(Icons.add),
+      ),
       drawer: Drawer(
         child: ListView(
           children: <Widget>[
