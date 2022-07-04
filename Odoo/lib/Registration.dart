@@ -64,9 +64,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       final Response = await dio.get(url);
 
       if (Response.statusCode == 200) {
-        return Response.data;
+        return true;
       } else {
-        return Response.data;
+        return false;
       }
     } catch (E) {
       print(E.toString());
@@ -279,12 +279,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                           onPressed: () {
                                             Navigator.pop(context, 'ok');
                                             setState(() {
-                                              FirstNameController.clear();
-                                              LastNameController.clear();
-                                              PhoneNumberController.clear();
-                                              EmailController.clear();
-                                              ConfirmPasswordController.clear();
-                                              PasswordController.clear();
                                             });
                                           },
                                           child: const Text('ok'),
@@ -296,16 +290,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
-                                    content: Text('ُWrong Password'),
+                                    content: Text('Not Same Password'),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pop(context, 'ok');
                                           setState(() {
-                                            FirstNameController.clear();
-                                            LastNameController.clear();
-                                            PhoneNumberController.clear();
-                                            EmailController.clear();
                                             ConfirmPasswordController.clear();
                                             PasswordController.clear();
                                           });

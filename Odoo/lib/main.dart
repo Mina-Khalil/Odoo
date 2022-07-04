@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(
               centerTitle: true,
-              title: const Text("Odoo",
+              title: const Text("Minions",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold))),
           body: const MyStatefulWidget(),
         ),
@@ -87,21 +87,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     );
                   },
                 )),
-            // Container(
-            //     height: 50,
-            //     padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
-            //     child: ElevatedButton(
-            //       child: const Text(
-            //         'insert',
-            //         style: TextStyle(fontSize: 25),
-            //       ),
-            //       onPressed: () {
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(builder: (context) => InsertData()),
-            //         );
-            //       },
-            //     )),
           ],
         ));
   }
