@@ -48,6 +48,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Future<bool> GetPinFun() async {
     try {
       String url = "http://20.89.56.192:8080/api/sendpin/";
+      // String url = "http://192.168.1.4:8080/api/sendpin/";
       List<String>? data;
       String? res;
       url += EmailController.text;

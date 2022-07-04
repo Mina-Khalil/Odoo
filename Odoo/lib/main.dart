@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:odoo/CreateTable.dart';
 import 'package:odoo/HomePage.dart';
+import 'package:odoo/InsertData.dart';
 import 'package:odoo/LoginPage.dart';
 import 'package:odoo/Registration.dart';
 import 'package:odoo/RestPassword.dart';
@@ -86,7 +87,21 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                     );
                   },
                 )),
-            //////////// create account
+            // Container(
+            //     height: 50,
+            //     padding: const EdgeInsets.fromLTRB(100, 10, 100, 0),
+            //     child: ElevatedButton(
+            //       child: const Text(
+            //         'insert',
+            //         style: TextStyle(fontSize: 25),
+            //       ),
+            //       onPressed: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(builder: (context) => InsertData()),
+            //         );
+            //       },
+            //     )),
           ],
         ));
   }

@@ -34,6 +34,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Future<bool> LogInFun() async {
     try {
       String url = "http://20.89.56.192:8080/api/signin/";
+      // String url = "http://192.168.1.4:8080/api/signin/";
       List<String>? data;
       String? res;
       url += nameController.text + "+" + passwordController.text;
@@ -43,7 +44,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
       final Response = await dio.get(url);
 
-      if (Response.statusCode == 200) {
+      if (Response.statusCode == 200 && Response.data != "\n-1") {
         setState(() {
           res = Response.data;
         });
@@ -51,7 +52,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         //print(data);
         Provider.of<MyProvider>(context, listen: false)
             .setData(data[1], data[0]);
-
+        if (data[1] == -1) return false;
         return true;
       } else {
         return false;

@@ -20,7 +20,9 @@ class _HomePageState extends State<HomePage> {
 
   Future<bool> GetDataBase() async {
     try {
-      String url = "http://192.168.1.4:8080/api/selectall/";
+      String url = "http://20.89.56.192:8080/api/selectall/";
+      // String url = "http://192.168.1.4:8080/api/selectall/";
+
       List<String>? data;
       String? res;
       String id = Provider.of<MyProvider>(context, listen: false).id;
@@ -51,6 +53,7 @@ class _HomePageState extends State<HomePage> {
   Future<bool> CreateDataBase() async {
     try {
       String url = "http://20.89.56.192:8080/api/createdb/";
+      // String url = "http://192.168.1.4:8080/api/createdb/";
       List<String>? data;
       String? res;
       url += Provider.of<MyProvider>(context, listen: false).id +
@@ -126,6 +129,7 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.symmetric(horizontal: 2.0),
                           child: ElevatedButton(
                               onPressed: () {
+                                print(e);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -160,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context, 'Cancel');
-                          CDataBaseController.clear();
+                          CDataBaseController.text = "";
                         },
                         child: const Text('Cancel'),
                       ),

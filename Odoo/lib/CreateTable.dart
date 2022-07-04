@@ -41,6 +41,8 @@ class _CreateTableState extends State<CreateTablef> {
   Future<bool> CreateTableFun() async {
     try {
       String url = "http://20.89.56.192:8080/api/createtable/";
+      // String url = "http://192.168.1.4:8080/api/createtable/";
+
       List<String>? data;
       String? res;
       url += Provider.of<MyProvider>(context, listen: false).id +
@@ -68,8 +70,8 @@ class _CreateTableState extends State<CreateTablef> {
         });
         data = res!.split("\n");
         //print(data);
-        Provider.of<MyProvider>(context, listen: false)
-            .setData(data[1], data[0]);
+        // Provider.of<MyProvider>(context, listen: false)
+        //     .setData(data[1], data[0]);
 
         return true;
       } else {
@@ -110,14 +112,6 @@ class _CreateTableState extends State<CreateTablef> {
               ),
             ),
             ListTile(
-              leading: IconButton(
-                icon: const Icon(Icons.remove),
-                onPressed: () {
-                  setState(() {
-                    if (length != 0) length--;
-                  });
-                },
-              ),
               trailing: IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
