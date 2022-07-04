@@ -17,24 +17,12 @@ import 'package:dio/dio.dart';
 // }
 
 class InsertData extends StatefulWidget {
-  String? DataBaseName;
-
-  InsertData(String data) {
-    DataBaseName = data;
-  }
-
   @override
-  State<InsertData> createState() => _InsertDataState(DataBaseName!);
+  State<InsertData> createState() => _InsertDataState();
 }
 
 class _InsertDataState extends State<InsertData> {
   TextEditingController AddDataController = TextEditingController();
-
-  String? Dname;
-
-  _InsertDataState(String DataBaseName) {
-    Dname = DataBaseName;
-  }
 
   TextEditingController InsertDataController = TextEditingController();
   List<dynamic>? tables = [];
@@ -54,7 +42,9 @@ class _InsertDataState extends State<InsertData> {
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
 
-      url += "therooteddata+tables+name+schema_id+" + Dname! + "+true";
+      url += "therooteddata+tables+name+schema_id+" +
+          Provider.of<MyProvider>(context, listen: false).databaseName +
+          "+true";
       final Dio dio = Dio();
       print(url);
       final Response = await dio.get(url);
@@ -88,7 +78,9 @@ class _InsertDataState extends State<InsertData> {
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
       tableName = tableName!.replaceAll("\n", "");
-      url += Dname! + "+" + tableName!;
+      url += Provider.of<MyProvider>(context, listen: false).databaseName +
+          "+" +
+          tableName!;
       final Dio dio = Dio();
       print(tableName! + "aaa");
       print(url);
@@ -137,7 +129,7 @@ class _InsertDataState extends State<InsertData> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Tables(Dname!)),
+              MaterialPageRoute(builder: (context) => Tables()),
             );
           },
         ),

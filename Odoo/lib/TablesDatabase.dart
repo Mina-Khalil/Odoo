@@ -9,21 +9,11 @@ import 'api/TestAPI.dart';
 import 'package:http/http.dart' as http;
 
 class Tables extends StatefulWidget {
-  String? DataBaseName;
-  String? datavalue;
-  Tables(String data) {
-    DataBaseName = data;
-  }
   @override
-  State<Tables> createState() => _TablesState(DataBaseName!);
+  State<Tables> createState() => _TablesState();
 }
 
 class _TablesState extends State<Tables> {
-  String? Dname;
-  _TablesState(String DataBaseName) {
-    Dname = DataBaseName;
-  }
-
   TextEditingController columnNameController = TextEditingController();
   TextEditingController AddColumnController = TextEditingController();
 
@@ -50,7 +40,9 @@ class _TablesState extends State<Tables> {
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
 
-      url += "therooteddata+tables+name+schema_id+" + Dname! + "+true";
+      url += "therooteddata+tables+name+schema_id+" +
+          Provider.of<MyProvider>(context, listen: false).databaseName +
+          "+true";
       final Dio dio = Dio();
       print(url);
       final Response = await dio.get(url);
@@ -85,7 +77,9 @@ class _TablesState extends State<Tables> {
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
       tableName = tableName!.replaceAll("\n", "");
-      url += Dname! + "+" + tableName!;
+      url += Provider.of<MyProvider>(context, listen: false).databaseName +
+          "+" +
+          tableName!;
       final Dio dio = Dio();
       print(tableName! + "aaa");
       print(url);
@@ -127,7 +121,10 @@ class _TablesState extends State<Tables> {
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
       tableName = tableName!.replaceAll("\n", "");
-      url += Dname! + "+" + tableName! + "+add+";
+      url += Provider.of<MyProvider>(context, listen: false).databaseName +
+          "+" +
+          tableName! +
+          "+add+";
       url += AddColumnController.text + "+" + typeValue! + "+%20+%20";
       final Dio dio = Dio();
       print(url);
@@ -162,7 +159,10 @@ class _TablesState extends State<Tables> {
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
       tableName = tableName!.replaceAll("\n", "");
-      url += Dname! + "+" + tableName! + "+update+";
+      url += Provider.of<MyProvider>(context, listen: false).databaseName +
+          "+" +
+          tableName! +
+          "+update+";
       url +=
           CoulmName! + "+%20+" + typeValue! + "+" + columnNameController.text;
       final Dio dio = Dio();
@@ -261,7 +261,7 @@ class _TablesState extends State<Tables> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CreateTable(Dname!)));
+                                builder: (context) => CreateTable()));
                       });
                     },
                     icon: const Icon(Icons.add_circle),
@@ -443,8 +443,7 @@ class _TablesState extends State<Tables> {
                     onPressed: () async {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => InsertData(Dname!)),
+                        MaterialPageRoute(builder: (context) => InsertData()),
                       );
                     },
                     icon: const Icon(Icons.insert_chart_outlined)),

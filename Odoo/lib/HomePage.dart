@@ -129,11 +129,13 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.symmetric(horizontal: 2.0),
                           child: ElevatedButton(
                               onPressed: () {
+                                Provider.of<MyProvider>(context, listen: false)
+                                    .databaseName = e;
                                 print(e);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Tables(e)));
+                                        builder: (context) => Tables()));
                               },
                               child: SingleChildScrollView(child: Text(e))),
                         ))

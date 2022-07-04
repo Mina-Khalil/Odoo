@@ -4,25 +4,15 @@ import 'package:odoo/provider/my_provider.dart';
 import 'package:provider/provider.dart';
 
 class CreateTable extends StatelessWidget {
-  String? DataBaseName;
-  CreateTable(String Dname) {
-    DataBaseName = Dname;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return CreateTablef(DataBaseName!);
+    return CreateTablef();
   }
 }
 
 class CreateTablef extends StatefulWidget {
-  String? DataBaseName;
-  CreateTablef(String Dname) {
-    DataBaseName = Dname;
-  }
-
   @override
-  State<CreateTablef> createState() => _CreateTableState(DataBaseName!);
+  State<CreateTablef> createState() => _CreateTableState();
 }
 
 TextEditingController columnNameController = TextEditingController();
@@ -34,10 +24,6 @@ List<String> typeName = [];
 String? datavalue;
 
 class _CreateTableState extends State<CreateTablef> {
-  String? DName;
-  _CreateTableState(String Dname) {
-    DName = Dname;
-  }
   Future<bool> CreateTableFun() async {
     try {
       String url = "http://20.89.56.192:8080/api/createtable/";
@@ -49,7 +35,7 @@ class _CreateTableState extends State<CreateTablef> {
           "+" +
           Provider.of<MyProvider>(context, listen: false).token +
           "+";
-      url += DName! + "+";
+      url += Provider.of<MyProvider>(context, listen: false).databaseName + "+";
       url += TableName.text + "+";
       print(datavalue);
       print(columnNameController.text);
