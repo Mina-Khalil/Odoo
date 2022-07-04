@@ -34,6 +34,7 @@ class _TablesState extends State<Tables> {
   List test = ['name', 'nnnn'];
   List<bool>? IsCkecked;
   String? typeValue;
+  String? CoulmName;
   bool enable = true;
   final GlobalKey<FormState> _keyForm = GlobalKey<FormState>();
 
@@ -101,7 +102,7 @@ class _TablesState extends State<Tables> {
           IsCkecked = List.filled(CName!.length, false);
         });
         print(Data);
-        print(CName!.length);
+        print(CName);
         print(Type);
 
         return true;
@@ -127,14 +128,50 @@ class _TablesState extends State<Tables> {
           "+";
       tableName = tableName!.replaceAll("\n", "");
       url += Dname! + "+" + tableName! + "+add+";
-      url += AddColumnController.text + "+" + typeValue! + "++";
+      url += AddColumnController.text + "+" + typeValue! + "+%20+%20";
       final Dio dio = Dio();
       print(url);
       final Response = await dio.get(url);
 
       if (Response.statusCode == 200) {
         setState(() {
-          tables = Response.data;
+          // tables = Response.data;
+        });
+
+        //DataBases = res!.split("\t");
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (E) {
+      print(E.toString());
+      return false;
+    }
+  }
+
+  Future<bool> EditCoulm() async {
+    try {
+      String url = "http://20.89.56.192:8080/api/altertable/";
+      // String url = "http://192.168.1.4:8080/api/altertable/";
+      List<String>? data;
+      //String? res;
+      //String id = Provider.of<MyProvider>(context, listen: false).id;
+      url += Provider.of<MyProvider>(context, listen: false).id +
+          "+" +
+          Provider.of<MyProvider>(context, listen: false).token +
+          "+";
+      tableName = tableName!.replaceAll("\n", "");
+      url += Dname! + "+" + tableName! + "+update+";
+      url +=
+          CoulmName! + "+%20+" + typeValue! + "+" + columnNameController.text;
+      final Dio dio = Dio();
+      print(url);
+      final Response = await dio.get(url);
+
+      if (Response.statusCode == 200) {
+        setState(() {
+          //  tables = Response.data;
         });
 
         //DataBases = res!.split("\t");
@@ -272,14 +309,14 @@ class _TablesState extends State<Tables> {
                     ],
                   ),
                 )),
-            Container(
-                // color: Colors.grey,
-                height: MediaQuery.of(context).size.height * 60 / 100,
-                child: !show
-                    ? null
-                    //color: Colors.grey,
-                    : SingleChildScrollView(
-                        child: ListView.builder(
+            SingleChildScrollView(
+              child: Container(
+                  // color: Colors.grey,
+                  height: MediaQuery.of(context).size.height * 60 / 100,
+                  child: !show
+                      ? null
+                      //color: Colors.grey,
+                      : ListView.builder(
                           itemCount: CName!.length,
                           itemBuilder: (context, index) {
                             return ListTile(
@@ -287,7 +324,8 @@ class _TablesState extends State<Tables> {
                                 icon: Icon(Icons.create_rounded),
                                 onPressed: () {
                                   columnNameController.text = CName![index];
-                                  datavalue = Type![index];
+                                  typeValue = Type![index];
+                                  CoulmName = CName![index];
                                   setState(() {
                                     enable = false;
                                   });
@@ -305,8 +343,8 @@ class _TablesState extends State<Tables> {
                               subtitle: Text("Type: " + Type![index]),
                             );
                           },
-                        ),
-                      )),
+                        )),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -393,6 +431,9 @@ class _TablesState extends State<Tables> {
                     onPressed: enable
                         ? null
                         : () async {
+                            await EditCoulm();
+                            columnNameController.clear();
+                            GetDataTables();
                             setState(() {
                               enable = true;
                             });

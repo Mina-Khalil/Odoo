@@ -52,6 +52,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         //print(data);
         Provider.of<MyProvider>(context, listen: false)
             .setData(data[1], data[0]);
+
         if (data[1] == -1) return false;
         return true;
       } else {
